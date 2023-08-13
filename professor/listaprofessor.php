@@ -1,3 +1,13 @@
+<?php
+
+require_once "../conexao.php";
+
+$sql = "SELECT * FROM professor";
+$stmt = $conexao->prepare($sql);
+$stmt->execute();
+$professors = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -21,21 +31,23 @@
             <th>CPF</th>
             <th>Data de nascimento</th>
             <th>Status</th>
-            <th>Alterar</th>
             <th>Excluir</th>
-        </tr>
+            <th>Alterar</th>
 
-        <tr id="informacoes">
-            <th>$id</th>
-            <td>$nome</td>
-            <td>$endereco</td>
-            <td>$idade</td>
-            <td>$CPF</td>
-            <td>$datanascimentao</td>
-            <td>$Status</td>
-            <td>Alterar</td>
-            <td>Excluir</td>
         </tr>
+        <?php foreach ($professors as $professor) { ?>
+        <tr id="informacoes">
+            <th><?php echo $professor['id']; ?></th>
+            <td><?php echo $professor['nome']; ?></td>
+            <td><?php echo $professor['endereco']; ?></td>
+            <td><?php echo $professor['idade']; ?></td>
+            <td><?php echo $professor['cpf']; ?></td>
+            <td><?php echo $professor['datanascimento']; ?></td>
+            <td><?php echo $professor['estatus']; ?></td>
+            <td><a href="./crudprofessor.php?id=<?php echo $professor['id']; ?>">Excluir</a></td>
+            <td><a href="./alterarprofessor.php?id=<?php echo $professor['id']; ?>">Alterar</a></td>
+        </tr>
+        <?php } ?>
 
 
     </table>
